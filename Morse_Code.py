@@ -7,12 +7,8 @@ def start():
 def end(val):
     return float(perf_counter()-val)
 
-button = Button(23) #Button is initialized as being at Gpio pin 23, change this depending on your setup
+button = Button(23)
 
-End = -1
-Morse = ""
-space = False
-text = ""
 Code = {"_":" ",
         ".-":"A",
         "-...":"B",
@@ -40,46 +36,47 @@ Code = {"_":" ",
         "-..-":"X",
         "-.--":"Y",
         "..--":"Z"}
-while End <= 5:
-    active = False
-    Start = start()
-    
-    if button.is_active:
-        space = False
-            
-    elif not button.is_active:
-        space = True
+End = -1
+Morse = ""
+text = ""
+pressed = False
 
-    state = button.is_active
-    while button.is_active == state and End <5.1:
-        End = end(Start)
-        sleep(0.005)
-        
-    if End>=5 and space == True:
-        break
+while pressed == button.is_active:
+    sleep(0.05)
+pressed = True
+
+while End<=5 or pressed == True:
     
-    elif End <=0.3 and space == False:
-        Morse += "."
-        #print(Morse)
+    Start = start()
+    pressed = button.is_active
+    
+    while pressed == button.is_active:
+        sleep(0.05)
+        End = end(Start)
         
-    elif End > 2 and space == True:
-        if Code.get(Morse):
-            text += Code.get(Morse) + " "
-            Morse += "_"
-            #print(Morse)
-            print(text)
-            Morse = ""
-    elif End > 0.3 and space == False:
+        if End >= 5 and pressed == False:
+            break
+        
+        elif End >= 2 and pressed == False:
+            if text[-1] != " ":
+                Morse += "_"
+                print(Morse)
+                text += " "
+                print(text)
+                Morse = ""
+                break
+            
+        elif End >=0.5 and pressed == False:
+            if Code.get(Morse):
+                text += Code.get(Morse)
+                print(text)
+                Morse = ""
+
+          
+    if End > 0.3 and pressed == True:
         Morse += "-"
-        #print(Morse)
-        
-    elif End >=0.5 and space == True:
-        if Code.get(Morse):
-            text += Code.get(Morse)
-            print(text)
-            Morse = ""
-#print(Morse)
-if Code.get(Morse):
-            text += Code.get(Morse)
-            print(text)
-print(text)
+        print(Morse)
+            
+    elif End <=0.3 and pressed == True:
+        Morse += "."
+        print(Morse)
