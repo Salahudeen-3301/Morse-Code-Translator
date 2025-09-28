@@ -60,7 +60,7 @@ while End<=5 or pressed == True:
         elif End >= 2 and pressed == False:
             if text[-1] != " ":
                 Morse += "_"
-                print(Morse)
+                #print(Morse)
                 text += " "
                 print(text)
                 Morse = ""
@@ -75,8 +75,8 @@ while End<=5 or pressed == True:
           
     if End > 0.3 and pressed == True:
         Morse += "-"
-        print(Morse)
+        #print(Morse)
             
     elif End <=0.3 and pressed == True:
         Morse += "."
-        print(Morse)
+        #print(Morse)
