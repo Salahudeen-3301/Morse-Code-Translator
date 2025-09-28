@@ -7,7 +7,7 @@ def start():
 def end(val):
     return float(perf_counter()-val)
 
-button = Button(23)
+button = Button(17)
 
 Code = {"_":" ",
         ".-":"A",
